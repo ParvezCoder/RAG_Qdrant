@@ -1,6 +1,6 @@
 import os
 import streamlit as st
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import RetrievalQA
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -9,7 +9,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_huggingface import HuggingFaceEmbeddings
 
 # Load environment variables
-load_dotenv()
+# load_dotenv()
 google_api_key = os.getenv("GOOGLE_API_KEY")
 qdrant_api_key = os.getenv("QDRANT_API_KEY")
 
