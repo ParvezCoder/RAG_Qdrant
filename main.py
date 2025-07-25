@@ -62,3 +62,26 @@ if uploaded_file:
         retriever=qdrant.as_retriever()
     )
 
+ # Initialize chat history
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
+
+    # User query input
+    user_query = st.text_input("🔍 Ask a question about the resume:")
+
+    if user_query:
+        with st.spinner("💬 Generating answer..."):
+            response = qa_chain.invoke(user_query)
+            result = response["result"]
+            st.session_state.chat_history.append((user_query, result))
+            st.success("✅ Answer:")
+            st.write(result)
+
+    # Show chat history
+    if st.session_state.chat_history:
+        st.markdown("---")
+        st.subheader("📜 Chat History")
+        for q, a in reversed(st.session_state.chat_history):
+            st.markdown(f"**🟢 Q:** {q}")
+            st.markdown(f"**🔵 A:** {a}")
+            st.markdown("---")
