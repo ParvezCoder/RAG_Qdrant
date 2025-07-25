@@ -6,10 +6,13 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_qdrant import QdrantVectorStore
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_huggingface import HuggingFaceEmbeddings
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # 👉 Read API keys from Streamlit Secrets
-google_api_key = st.secrets.get("GOOGLE_API_KEY")
-qdrant_api_key = st.secrets.get("QDRANT_API_KEY")
+google_api_key = os.getenv("GOOGLE_API_KEY")
+qdrant_api_key = os.getenv("QDRANT_API_KEY")
 
 # ✅ Check if API keys are available
 if not google_api_key or not qdrant_api_key:
@@ -18,8 +21,11 @@ if not google_api_key or not qdrant_api_key:
 
 # ✅ Page layout
 st.set_page_config(page_title="Q&A with Resume", layout="centered")
-st.title("🤖 Resume Q&A App using Gemini + Qdrant")
-st.markdown("Upload a resume (PDF), then ask questions about it using Gemini AI!")
+st.title("🤖 Demo Project  using OpenAI + Pinecone")
+st.markdown("##### How run this project")
+st.markdown("1. Upload a PDF file (maximum size: 200MB)")
+st.markdown("2. Wait for Few second (for processing your Data)")
+st.markdown("3. Now You can ask question relative to given data")
 
 # ✅ File uploader
 uploaded_file = st.file_uploader("📄 Upload your resume (PDF only)", type="pdf")
@@ -67,7 +73,7 @@ if uploaded_file:
         st.session_state.chat_history = []
 
     # User query input
-    user_query = st.text_input("🔍 Ask a question about the resume:")
+    user_query = st.text_input("🔍 Ask a question about the resume:", placeholder="Enter your Question here")
 
     if user_query:
         with st.spinner("💬 Generating answer..."):
